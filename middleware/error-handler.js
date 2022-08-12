@@ -7,7 +7,8 @@ const errorHandler = (err,req, res, next) => {
     }
     if (err.name === "ValidationError") customError.statusCode = StatusCodes.BAD_REQUEST
     
-
+    if (err.name === "CastError") customError.statusCode = StatusCodes.BAD_REQUEST;
+    
       return res.status(customError.statusCode).json({ msg: customError.msg });
 }
 
