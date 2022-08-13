@@ -42,8 +42,12 @@ const PublicationSchema = new mongoose.Schema(
     },
     amount: {
       type: Number,
-      defult: 0
-    }
+      defult: 0,
+    },
+    earnings: {
+      type: Number,
+      defult: 0,
+    },
   },
   { timestamps: true }
 );
