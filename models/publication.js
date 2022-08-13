@@ -40,6 +40,10 @@ const PublicationSchema = new mongoose.Schema(
       required: [true, "Kindly provide user's address"],
       match: [/^0x[a-fA-F0-9]{40}$/, "Kindly provide a valid wallet address"],
     },
+    amount: {
+      type: Number,
+      defult: 0
+    }
   },
   { timestamps: true }
 );
