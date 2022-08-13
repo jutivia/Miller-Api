@@ -9,7 +9,14 @@ const createPublication = async (req, res) => {
 };
 
 const getAllPublications = async (req, res) => {
-    const publications = await Publication.find({})
+    const queryObject = {}
+    const {type, title} = req.query
+     if (title) {
+       queryObject.title = { $regex: title, $options: "i" };
+     }
+    if (type) queryObject.type = type
+    console.log(req.query)
+    const publications = await Publication.find(queryObject )
       .select("-cid")
       .sort("-updatedAt");
     res
