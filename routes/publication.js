@@ -15,7 +15,7 @@ router.route("/")
   .get(getAllPublications)
   .post(createPublication);
 router.get('/user', getPublicationsByUser)
-router.get("/user/:id", getCId);
+router.get("/cid/:id", getCId);
 router
   .route("/:id")
   .get(getPublication)
