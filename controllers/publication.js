@@ -18,7 +18,7 @@ const getAllPublications = async (req, res) => {
     console.log(req.query)
     const publications = await Publication.find(queryObject )
       .select("-cid")
-      .sort("-updatedAt");
+      .sort("-createdAt");
     res
       .status(StatusCodes.OK)
       .json({ count: publications.length, publications });
