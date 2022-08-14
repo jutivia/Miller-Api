@@ -34,28 +34,17 @@ const getPublicationsByUser = async (req, res) => {
     });
 };
 const getPublication = async (req, res) => {
-    const publication = await Publication.findOne({ _id: req.params.id })
+    const publication = await Publication.findOne({
+      _id: req.params.id,
+    }).select("-cid");
     if (!publication) {
       throw new NotFoundError(
         `Publication with id: ${req.params.id} not found`
       );
     }
-    const num = publication.views
-    req.body.views = num + 1 
-    const updatedCount = await Publication.findOneAndUpdate(
-       {
-         _id: req.params.id,
-       },
-       req.body,
-       {
-         new: true,
-         runValidators: true,
-       }
-    );
-    
     res
       .status(StatusCodes.OK)
-      .json({ msg: "Publication retrieved successfully", updatedCount });
+      .json({ msg: "Publication retrieved successfully", publication });
 };
 const updatePublication = async (req, res) => {
     const publication = await Publication.findOneAndUpdate(
@@ -89,6 +78,30 @@ const deletePublication = async (req, res) => {
     res.status(StatusCodes.OK).json({ msg: 'publication deleted successfully' });
 };
 
+const getCId = async(req, res) => {
+     const publication = await Publication.findOne({ _id: req.params.id })
+    if (!publication) {
+      throw new NotFoundError(
+        `Publication with id: ${req.params.id} not found`
+      );
+    }
+     const num = publication.views
+    req.body.views = num + 1 
+    const updatedCount = await Publication.findOneAndUpdate(
+      {
+        _id: req.params.id,
+      },
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    ).select("cid");
+    res
+      .status(StatusCodes.OK)
+      .json({ msg: "Publication retrieved successfully", updatedCount });
+} 
+
 
 module.exports = {
   getAllPublications,
@@ -97,4 +110,5 @@ module.exports = {
   updatePublication,
   deletePublication,
   createPublication,
+  getCId,
 };
