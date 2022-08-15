@@ -105,6 +105,30 @@ const getCId = async(req, res) => {
       .status(StatusCodes.OK)
       .json({ msg: "Publication retrieved successfully", updatedCount });
 } 
+const addComment = async (req, res) => {
+    const publication = await Publication.findOne({ _id: req.params.id });
+    if (!publication) {
+      throw new NotFoundError(
+        `Publication with id: ${req.params.id} not found`
+      );
+    }
+    const existingComments = publication.comments || [];
+    const newComments = [...existingComments, req.body.comment]
+    req.body.comments = newComments;
+    const updatedCount = await Publication.findOneAndUpdate(
+      {
+        _id: req.params.id,
+      },
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    ).select("-cid");
+    res
+      .status(StatusCodes.OK)
+      .json({ msg: "Publication retrieved successfully", updatedCount });
+}
 
 
 module.exports = {
@@ -115,4 +139,5 @@ module.exports = {
   deletePublication,
   createPublication,
   getCId,
+  addComment,
 };

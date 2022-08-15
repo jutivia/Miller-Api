@@ -48,6 +48,13 @@ const PublicationSchema = new mongoose.Schema(
       type: Number,
       defult: 0,
     },
+    comments: [
+      {
+        content: String,
+        createdAt: String,
+        commenter: String
+      },
+    ],
   },
   { timestamps: true }
 );

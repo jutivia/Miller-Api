@@ -8,6 +8,7 @@ const {
   deletePublication,
   createPublication,
   getCId,
+  addComment,
 } = require("../controllers/publication");
 
  
@@ -16,6 +17,7 @@ router.route("/")
   .post(createPublication);
 router.get('/user', getPublicationsByUser)
 router.get("/cid/:id", getCId);
+router.post("/comment/:id", addComment);
 router
   .route("/:id")
   .get(getPublication)
