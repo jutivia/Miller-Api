@@ -85,10 +85,12 @@ const getCId = async(req, res) => {
         `Publication with id: ${req.params.id} not found`
       );
     }
-    const earnings = publication.earnings;
+    const earnings = publication.earnings || 0;
      const num = publication.views
-    req.body.views = num + 1
-    req.body.earnings = earnings + publication.amount
+    req.body = {
+      views: num + 1,
+      earnings: Number(earnings + publication.amount),
+    };
     const updatedCount = await Publication.findOneAndUpdate(
       {
         _id: req.params.id,
