@@ -124,7 +124,7 @@ const addComment = async (req, res) => {
         new: true,
         runValidators: true,
       }
-    ).select("-cid");
+    ).select("comments");
     res
       .status(StatusCodes.OK)
       .json({ msg: "Publication retrieved successfully", updatedCount });
